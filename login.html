@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/login.css">
+    <title>Login</title>
+</head>
+<body>
+
+    <div class="login-card">
+        <h2>Login</h2>
+
+    <form class="login-form">
+        <div class="label-float">
+        <input type="text" placeholder="" id="login" required>
+        <label for="labelLogin" id="labelLogin">CPF</label>
+        </div>
+
+        <div class="label-float">
+        <input type="password" placeholder="" id="senha" required  >
+        <label for="labelSenha" id="labelSenha">Senha</label>
+        </div>
+        <a href="cadastro.html">Ainda não possui cadastro?</a>
+        <button type="submit" onclick="logar(); return false">LOGIN</button>
+    </form>
+
+    </div>
+    
+
+    <script src="login.js"></script>
+</body>
+</html>
