@@ -130,10 +130,10 @@ function cadastrar(){
 
             }
         )
-        alert('Cadastro realizado com sucesso')
+        
 
         localStorage.setItem('listaUser', JSON.stringify(listaUser))
-        
+        alert('Cadastro realizado com sucesso')
 
         setTimeout(()=> {
             window.location.href = 'http://127.0.0.1:5500/login.html?'
