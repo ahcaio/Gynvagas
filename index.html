@@ -1,44 +1,146 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/styles/style.css">
-    <title>GynVagas</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+    <link rel="stylesheet" href="public/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <title>Job Finder</title>
 </head>
 <body>
     <header>
-        <div class="center">  <!--center-->
-            <div class="logo">GynVagas</div> <!--logo-->
-            <div class="menu">
-                <a href="#">Início</a>
-                <a href="#">Para canditatos</a>
-                <a href="#">Para empresas</a>
-                <a href="#">Sobre</a>
-                <a href="login.html">Login</a>
-            </div> <!--menu-->
-         </div>
-    </header>
-    <section class="sobre">
-        <div class="extras">
-            <img class="mulher" src="assets/woman-7175038_preview_rev_1.png" alt="" >
-            <div class="social-media">
-                <a href=""><img src="assets/facebook.png" alt=""></a>
-                <a href=""><img src="assets/twitter.png" alt=""></a>
-                <a href=""><img src="assets/instagram.png" alt=""></a>
-            </div> <!--social-media-->
-        </div><!--extras-->
-        <div class="center">
-            <div class="texto-sobre">
-                <h1>Lorem ipsum dolor sit amet </br> adipiscing <span style="color: #EA5455; font-size: 60px;">elit</span>.</h1>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sed condimentum sem. Phasellus blandit varius diam, non elementum lectus accumsan sit amet. Aliquam aliquet est lacus, nec convallis justo condimentum eu. Ut molestie vel lorem sit amet aliquam. Praesent sodales molestie massa. In nec orci in est suscipit eleifend. Phasellus metus dolor, scelerisque sed malesuada ut, auctor in orci.
-                </p>
-                <button>Saiba mais</button>
+        <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="index.html">GynVagas</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="inicio.html">Início</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="sobre.html">Sobre</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Ver vagas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-primary" href="empresa.html">Para empresas</a>
+                    </li>
+                </ul>
             </div>
-        </div> <!--center-->
-    </section> <!--sobre-->
+        </nav>
+    </header>
+    <div id="top-container" class="container-fluid">
+        <h1 id="main-title" class="text-center">Encontre o emprego dos seus sonhos</h1>
+        <p id="main-subtitle" class="text-center">Somos o site com mais vagas de Goiânia no mercado, ao seu alcance.</p>
+        <form id="search-form" class="form-inline" action="">
+            <div class="form-group col-md-10">
+                <input type="text" class="form-control" id="job" name="job" placeholder="Digite a vaga que está buscando">
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-primary">Procurar</button>
+            </div>
+        </form>
+    </div>
+    <main>
+        <div id="jobs-container" class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2 class="title"  id="job-list-title">Veja as nossas vagas em destaque</h2>
+                    <ul id="job-list" class="list-group">
+                        <li class="list-group-item new-job">
+                            <img src="public/img/company.svg" alt="Company">
+                            <p>Empresa</p>
+                            <h2>Vaga de exemplo</h2>
+                            <p>R$5.000,00</p>
+                            <span class="new-job-label">Nova</span>
+                            <a class="btn btn-primary">Candidatar-se</a>
+                        </li>
+                        <li class="list-group-item">
+                            <img src="public/img/company.svg" alt="Company">
+                            <p>Empresa</p>
+                            <h2>Vaga de exemplo</h2>
+                            <p>R$3.500,00</p>
+                            <a class="btn btn-primary">Candidatar-se</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
 
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <p>Informações de contato</p>
+                    <p>Email: contato@gynvagas.com</p>
+                    <p>Telefone: (XX) XXXX-XXXX</p>
+                </div>
+                <div class="col-md-6">
+                    <p>Direitos autorais</p>
+                    <p>Todos os direitos reservados &copy; GynVagas 2023</p>
+                </div>
+            </div>
+        </div>
+    </footer>
 
+    <script>
+        // Recupere os dados salvos no LocalStorage
+        var savedFormDataJson = localStorage.getItem("jobList");
+      
+        // Check if there is any saved form data
+        if (savedFormDataJson) {
+          // Parse the JSON string back into an array of objects
+          var savedFormDataArray = JSON.parse(savedFormDataJson);
+      
+          // Get the job list element
+          var jobListElement = document.getElementById("job-list");
+      
+          // Iterate over the saved form data array
+          for (var i = 0; i < savedFormDataArray.length; i++) {
+            var savedFormData = savedFormDataArray[i];
+      
+            // Create a new list item
+            var newListItem = document.createElement("li");
+            newListItem.classList.add("list-group-item");
+      
+            // Add the HTML content to the list item
+            newListItem.innerHTML = `
+              <img src="public/img/company.svg" alt="Company">
+              <p>${savedFormData.company}</p>
+              <h2>${savedFormData.title}</h2>
+              <p>${savedFormData.salary}</p>
+              <a class="btn btn-primary">Candidatar-se</a>
+            `;
+
+            // Add the new list item to the job list
+            jobListElement.appendChild(newListItem);
+          }
+        }
+            // Função para exibir o pop-up
+    function showPopup() {
+        Swal.fire({
+            title: 'Candidatura realizada!',
+            icon: 'success',
+            text: 'Sua candidatura foi enviada com sucesso.',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'Fechar'
+        });
+    }
+
+    // Adiciona o evento de clique aos botões de candidatura
+    var applyButtons = document.querySelectorAll(".btn-primary");
+    for (var i = 0; i < applyButtons.length; i++) {
+        applyButtons[i].addEventListener("click", showPopup);
+    }
+      </script>
+      
+      
+        
 </body>
 </html>
