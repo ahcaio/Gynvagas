@@ -1,4 +1,4 @@
-const pool = require('./databaseEmpresa');
+const pool = require('./database');
 
 class Empresa {
     constructor(id_empresa, nome_empresa, email) {
