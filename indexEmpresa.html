@@ -78,12 +78,12 @@
     })
     ;
 
-    async function editEmpresa(id) {
-        const response = await fetch(API_URL + '/' + id);
+    async function editEmpresa(id_empresa) {
+        const response = await fetch(API_URL + '/' + id_empresa);
         const empresa = await response.json();
-        empresaIdInput.value = empresa.id;
-        nomeInput.value = empresa.nome;
-        emailInput.value = empresa.email;
+        empresaIdInput.value = empresa.id_empresa;
+        nomeInput.value = empresa.nome_empresa;
+        emailInput.value = empresa.email_empresa;
     }
 
     async function deleteEmpresa(id_empresa) {
