@@ -40,7 +40,7 @@
 </div>
 
 <script>
-    const API_URL = 'http://localhost:3000/empresa';
+    const API_URL = 'http://localhost:8080/empresa';
 
     const empresaForm = document.getElementById('empresaForm');
     const empresaTable = document.getElementById('empresaTable');
@@ -81,7 +81,6 @@
     async function editEmpresa(id) {
         const response = await fetch(API_URL + '/' + id);
         const empresa = await response.json();
-        // id utilizados no html
         empresaIdInput.value = empresa.id;
         nomeInput.value = empresa.nome;
         emailInput.value = empresa.email;
