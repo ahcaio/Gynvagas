@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Empresa</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+</head>
+<body>
+
+<div class="container">
+    <h1 class="mt-5">Cadastro de Empresa</h1>
+
+    <form id="empresaForm" class="mt-4">
+        <input type="hidden" id="id_empresa">
+        <div class="mb-3">
+            <label for="nome" class="form-label">Nome da Empresa:</label>
+            <input type="text" id="nome" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">E-mail:</label>
+            <input type="text" id="email" class="form-control" step="0.01" required>
+        </div>
+        <button type="submit" class="btn btn-primary" >Salvar</button>
+    </form>
+
+    <table class="table mt-4">
+        <caption>Lista com dados dos candidatos à vaga cadastrados no site</caption>
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nome</th>
+            <th>Email</th>
+        </tr>
+        </thead>
+        <tbody id="empresaTable">
+        </tbody>
+    </table>
+</div>
+
+<script>
+    const API_URL = 'http://localhost:8080/empresa';
+
+    const empresaForm = document.getElementById('empresaForm');
+    const empresaTable = document.getElementById('empresaTable');
+    const empresaIdInput = document.getElementById('id_empresa');
+    const nomeInput = document.getElementById('nome');
+    const emailInput = document.getElementById('email');
+
+    empresaForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        const empresaId = empresaIdInput.value;
+        const nome = nomeInput.value;
+        const email = emailInput.value;
+
+        if (empresaId) {
+            await fetch(API_URL + '/' + empresaId, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({nome, email})
+            });
+        } else {
+            await fetch(API_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({nome, email})
+            });
+        }
+
+        resetForm();
+        await loadEmpresa();
+    })
+    ;
+
+    async function editEmpresa(id) {
+        const response = await fetch(API_URL + '/' + id);
+        const empresa = await response.json();
+        empresaIdInput.value = empresa.id;
+        nomeInput.value = empresa.nome;
+        emailInput.value = empresa.email;
+    }
+
+    async function deleteEmpresa(id_empresa) {
+        await fetch(API_URL + '/' + id_empresa, {
+            method: 'DELETE'
+        });
+
+        await loadEmpresa();
+    }
+
+    function resetForm() {
+        empresaIdInput.value = '';
+        nomeInput.value = '';
+        emailInput.value = '';
+    }
+
+    async function loadEmpresa() {
+        const response = await fetch(API_URL);
+        const empresas = await response.json();
+
+        let html = '';
+        for (const empresa of empresas) {
+            html += `
+                    <tr>
+<!--usar os mesmos ids do html para referenciar os atributos-->
+                        <td>${empresa.id_empresa}</td>
+                        <td>${empresa.nome_empresa}</td>
+                        <td>${empresa.email_empresa}</td>
+                        <td>
+                            <button class="edit-btn btn btn-success" onclick="editEmpresa(${empresa.id_empresa})">Editar</button>
+                            <button class="delete-btn btn btn-danger" onclick="deleteEmpresa(${empresa.id_empresa})">Excluir</button>
+                        </td>
+                    </tr>
+                `;
+
+        }
+        empresaTable.innerHTML = html;
+    }
+
+    
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"
+        integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js"
+        integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ"
+        crossorigin="anonymous"></script>
+</body>
+</html>
