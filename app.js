@@ -1,6 +1,64 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const Empresa = require('./empresa');
+
+const appCandidatoEmpresa = express();
+appCandidatoEmpresa.use(cors());
+appCandidatoEmpresa.use(bodyParser.json());
+
+appCandidatoEmpresa.get('/empresa', async (req, res) => {
+  const empresa = await Empresa.findAll();
+  res.json(empresa);
+});
+
+appCandidatoEmpresa.get('/empresa/:id', async (req, res) => {
+  const empresa = await Empresa.findById(req.params.id);
+  if (!empresa) {
+    res.status(404).send('Empresa não encontrada');
+  } else {res.json(empresa);
+  }
+});
+
+appCandidatoEmpresa.post('/empresa', async (req, res) => {
+  const { nome, email } = req.body;
+  const empresa = new Empresa(null, nome, email);
+  await empresa.save();
+  res.json(empresa);
+});
+
+appCandidatoEmpresa.put('/empresa/:id', async (req, res) => {
+  const empresa = await Empresa.findById(req.params.id);
+  if (!empresa) {
+    //conferir se esse essas mensagens aparecem na aba network
+    res.status(404).send('Empresa não encontrada');
+  } else {
+    const { nome, email } = req.body;
+    empresa.nome = nome;
+    empresa.email = email;
+    await empresa.save();
+    res.json(empresa);
+  }
+});
+
+appCandidatoEmpresa.delete('/empresa/:id', async (req, res) => {
+  const empresa = await Empresa.findById(req.params.id);
+  if (!empresa) {
+    res.status(404).send('Empresa não encontrada');
+  } else {
+    await empresa.delete();
+    res.status(204).send('Empresa removida com sucesso');
+  }
+});
+
+// const PORT = process.env.PORT || 3000;
+// appCandidatoEmpresa.listen(PORT, () => {
+//   console.log(`Servidor rodando na porta ${PORT}`);
+// });
+
+// const express = require('express');
+// const bodyParser = require('body-parser');
+// const cors = require('cors');
 const Candidato = require('./candidato');
 
 const app = express();
