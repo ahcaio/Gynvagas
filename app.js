@@ -69,7 +69,6 @@ app.post('/candidatos', async (req, res) => {
   const candidato = new Candidato(null, nome, login, email);
   await candidato.save();
   res.json(candidato);
-  // res.json({ message: 'Cadastro realizado com sucesso!' });
   console.log("Candidato inserido com sucesso!")
 });
 
